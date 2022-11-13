@@ -3,48 +3,48 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import { UserContext } from './context/UserContext';
+import { UserIdContext } from './context/UserIdContext';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
+import ProfileScreen from './components/ProfileScreen';
+import { BrowserRouter as Router, Routes, Route,Navigate } from "react-router-dom";
 
 
 function App() {
+  const [userId,setUserId] = useContext(UserIdContext)
   const [token] = useContext(UserContext)
-  const [message, setMessage] = useState("")
-
-  const getWelcomeMessage = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch("/api", requestOptions);
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.log("something messed up");
-    } else {
-      setMessage(data.message);
-    }
-  };
-
-  useEffect(() => {
-    getWelcomeMessage();
-  }, []);
-
+ 
  
   return (
     <div>
-      <Header title={message} />
-      {
-        !token?
-        <Login/>:(
-          <div>
-            <Dashboard/>
-        <Profile/>
-        </div>)
-        
+      <Router>
+      <Header  />
+      <Routes>
+      <Route 
+      path='/' 
+      element={
+        (!token )?<Login/>:(<div><ProfileScreen/></div>)
       }
+      ></Route>
+    
+    <Route 
+      path='/register' 
+      element={
+        (!token )?<Register/>:(<div><ProfileScreen/></div>)
+      }
+      ></Route>  
+
+      <Route 
+      path='/dashboard' 
+      element={(token )?<Dashboard/>:<Navigate to='/'></Navigate>}
+      ></Route>
+      
+
+      </Routes>
+      
+      </Router>
+      
+     
       
      
      

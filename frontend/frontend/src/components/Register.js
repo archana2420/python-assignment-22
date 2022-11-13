@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-
+import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import ErrorMessage from "./ErrorMessage";
 
@@ -95,11 +95,16 @@ const Register = () => {
             />
           </div>
         </div>
-        <ErrorMessage message={errorMessage} />
+        
         <br />
         <button className="button is-primary" type="submit">
           Register
         </button>
+        <br></br>
+        <Link to="/">
+          <a className="mt-2">Already a member? Login here</a>
+        </Link>
+                    
       </form>
     </div>
   );

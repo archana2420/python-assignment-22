@@ -1,23 +1,33 @@
 import React, { useContext } from "react";
-
+import Profile from "./Profile";
 import { UserContext } from "../context/UserContext";
+import { UserIdContext } from "../context/UserIdContext";
 
-const Header = ({ title }) => {
-  const [token, setToken] = useContext(UserContext);
+const Header = () => {
+  const [token, setToken] = useContext(UserContext)
+  const [userId,setUserId] = useContext(UserIdContext)
 
   const handleLogout = () => {
-    setToken(null);
+    setToken(null)
+    setUserId(null)
   };
 
   return (
-    <div className="has-text-centered m-6">
-      <h1 className="title">{title}</h1>
-      {token && (
-        <button className="button" onClick={handleLogout}>
+    <nav className="navbar  p-2 is-primary">
+     
+      <div className="navbar-end">
+        <div className="nav-item">
+        {token && (
+        <button className="button is-info" onClick={handleLogout}>
           Logout
         </button>
       )}
-    </div>
+        </div>
+        </div>
+      
+      
+     
+    </nav>
   );
 };
 

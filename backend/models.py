@@ -15,11 +15,12 @@ class Products(database.Base):
     __tablename__ = "products"
     id = sql.Column(sql.Integer,primary_key=True,index=True)
     name = sql.Column(sql.String)
-    brand = sql.Column(sql.String)
+    brand = sql.Column(sql.String,default='Unknown')
     description = sql.Column(sql.String)
     price = sql.Column(sql.Float)
     stock = sql.Column(sql.Integer,default=50)
     date_of_manufacture = sql.Column(sql.Date,default=random_date)
+    thumbnail =sql.Column(sql.String,default='https://apply.sts.net.pk/assets/images/default-upload-image.jpg')
 
 
 class User(database.Base):

@@ -1,13 +1,14 @@
-import React, { useState,useContext } from "react";
+import React, { useState,useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import ErrorMessage from "./ErrorMessage";
+import { Link } from "react-router-dom";
 
 const Login = () =>{
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [errorMessage,setErrorMessage] = useState("")
-    const [, setToken] = useContext(UserContext)
-
+    const [token, setToken] = useContext(UserContext)
+    
     const onUserFormSubmit = async()=>{
         const requestOptions ={
             method:"POST",
@@ -28,16 +29,22 @@ const Login = () =>{
             setToken(data.access_token)
             console.log("Successfully Logged In")
         }
+        
     }
+    
+        
+    
+   
     const handleSubmit = (e)=>{
         e.preventDefault()
-        
         onUserFormSubmit()
+       
         
     }
 
     return(
-        <div className="column">
+        <div className="is-flex is-justify-content-center m-6 " style={{width:"30rem"}} >
+            <div className="column " >
             <form className="box" onSubmit={handleSubmit}>
                 <h1 className="title has-text-centered">Login</h1>
                 
@@ -66,10 +73,18 @@ const Login = () =>{
                     </div>
                     </div>
                     
-                    <ErrorMessage message={errorMessage}/>
+                    {/* <ErrorMessage message={errorMessage}/> */}
                     <button className="button is-primary" type="submit" >Login</button>
+                    <br></br>
+                    <Link to="/register">
+                    <a className="mt-2">Not a member? Register here</a>
+                    </Link>
+                    
             </form>
+            
         </div>
+        </div>
+        
     )
 }
 

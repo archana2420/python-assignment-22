@@ -7,6 +7,7 @@ class ProductBase(pydantic.BaseModel):
     description:str 
     price:int 
     stock:int 
+    thumbnail:str
     
     
 
@@ -20,7 +21,10 @@ class Product(ProductBase):
 class UserBase(pydantic.BaseModel):
     name:str
     email:str 
-    
+
+class UserAddMoney(pydantic.BaseModel):
+    id:int
+    wallet:int
 
 class UserCreate(UserBase):
     hashed_password:str 
@@ -31,3 +35,12 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+class Weather(pydantic.BaseModel):
+    city:str
+
+class BuyItem(pydantic.BaseModel):
+    product_id:int 
+    product_stock:int
+    user_id:int 
+    

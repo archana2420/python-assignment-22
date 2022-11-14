@@ -62,12 +62,21 @@ uvicorn==0.19.0
 
 "react-router-dom": "^6.4.3",
 
+"react-scripts": "5.0.1",
+
 # How to navigate :
+
+For Backend:
 
 1) cd python-assignment-22-main 
 2) venv\Scripts\activate
 3) cd backend
 4) uvicorn main:app --reload 
-5) Open another terminal and do    npm start 
+
+For Frontend
+1) cd python-assignment-22-main/frontend/frontend
+2) npm start 
+
+If database locked error shows up disable Antivirus
 
 

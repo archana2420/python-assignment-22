@@ -43,4 +43,7 @@ class BuyItem(pydantic.BaseModel):
     product_id:int 
     product_stock:int
     user_id:int 
+
+class GetProduct(pydantic.BaseModel):
+    product_name:str
     

@@ -8,38 +8,6 @@ const Product = ({productDetails})=>{
     const [token] = useContext(UserContext)
     const [userId,setUserId] = useContext(UserIdContext)
     
-    // useEffect(()=>{
-    //     const fetchUser = async () => {
-    //         const requestOptions = {
-    //           method: "GET",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: "Bearer " + token,
-    //           },
-    //         };
-      
-    //         const response = await fetch("/api/user/", requestOptions)
-    //         const data = await response.json()
-      
-    //         if (!response.ok) {
-    //           setUserId(null)
-             
-    //         }
-    //         else{
-    //           console.log(data)
-    //           setUserId(data.id)
-    //           console.log(userId)
-    //           localStorage.setItem("UserID", data.id)
-              
-    //         }
-            
-    //         localStorage.setItem("UserID", userId)
-    //       }
-    //     //   fetchUser()
-    // },[userId])
-        
-          
-    
     
     const buyProducts = async()=>{
         const requestOptions ={
@@ -81,10 +49,10 @@ const Product = ({productDetails})=>{
                
               
             </div>
-            <div className="title is-4">{name}</div>
+            <div className="title is-5">{name}</div>
             <div className="subtitle is-6">
                 <p className="has-text-weight-bold">{brand}</p>
-                <p>{description}</p>
+                <p style={{textOverflow:"ellipsis",overflow:'hidden',whiteSpace:'nowrap'}}>{description}</p>
                 <p className="p-1"><span style={{backgroundColor:"green",color:"white"}} >₹{price}</span></p>
                 <p>Only {stock} left !!</p>
                 <p className="has-text-weight-medium">DOF:{date_of_manufacture}</p>

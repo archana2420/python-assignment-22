@@ -96,10 +96,20 @@ def create(request: schemas.ProductBase,db:Session = Depends(services.get_db)):
     return products
     # return new_product
 
-@app.get("/testing_api/")
+@app.get("/api/get-products/")
 async def productsList(db:Session = Depends(services.get_db)):
      products = db.query(models.Products).all()
      return products
+
+@app.post("/api/get-product/")
+async def getProduct(item:schemas.GetProduct,db:Session = Depends(services.get_db)):
+    product = db.query(models.Products).filter(models.Products.name.ilike(item.product_name)).first()
+    product = db.query(models.Products).filter(models.Products.name==item.product_name).first()
+    if not product:
+        print(product)
+        raise fastapi.HTTPException(status_code=404,detail="Not found!")
+    return product
+
 
 @app.post("/create-items/")
 def create_items(db:Session = Depends(services.get_db)):
@@ -129,17 +139,72 @@ def create_items(db:Session = Depends(services.get_db)):
 
 @app.get("/create-items-3/")
 def create_items(db:Session = Depends(services.get_db)):
-    url = 'https://api.fakeshop-api.com/products/getAllProducts'
-    response = requests.request('GET',url=url)
-    # products = response.json()
-    print(response)
-    # for item in products["products"]:
-    #     new_product = models.Products(name=item['title'],brand=item['brand'],description=item['description'],price=item['price'])
-    #     db.add(new_product)
-    #     db.commit()
-    #     db.refresh(new_product)
+    url = "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list"
+
+    querystring = {"country":"us","lang":"en","currentpage":"0","pagesize":"30","categories":"men_all","concepts":"H&M MAN"}
+
+    headers = {
+        "X-RapidAPI-Key": "348bad0d17msh6fd59a0c6e9c2b7p154319jsn90c3fa4080ce",
+        "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    products = response.json()
+    for item in products["results"]:
+        new_product = models.Products(name=item['name'],brand=item['brandName'],price=item['price']['value'],thumbnail=item['images'][0]['url'])
+        db.add(new_product)
+        db.commit()
+        db.refresh(new_product)
     
-    # return db.query(models.Products).all()
+    return db.query(models.Products).all()
+
+
+@app.get("/create-items-4/")
+def create_items(db:Session = Depends(services.get_db)):
+    url = "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list"
+
+    querystring = {"country":"us","lang":"en","currentpage":"0","pagesize":"30","categories":"men_all","concepts":"H&M MAN"}
+
+    headers = {
+        "X-RapidAPI-Key": "348bad0d17msh6fd59a0c6e9c2b7p154319jsn90c3fa4080ce",
+        "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    products = response.json()
+    for item in products["results"]:
+        new_product = models.Products(name=item['name'],brand=item['brandName'],price=item['price']['value'],thumbnail=item['images'][0]['url'])
+        db.add(new_product)
+        db.commit()
+        db.refresh(new_product)
+    
+    return db.query(models.Products).all()
+
+@app.get("/create-items-5/")
+def create_items(db:Session = Depends(services.get_db)):
+    url = "https://api.storerestapi.com/products"
+    response = requests.request("GET", url)
+    products = response.json()
+    for item in products["data"]:
+        new_product = models.Products(name=item['title'],price=item['price'])
+        db.add(new_product)
+        db.commit()
+        db.refresh(new_product)
+    
+    return db.query(models.Products).all()
+
+@app.get("/create-items-6/")
+def create_items(db:Session = Depends(services.get_db)):
+    url = "https://api.escuelajs.co/api/v1/products"
+    response = requests.request("GET", url)
+    products = response.json()
+    for item in products:
+        new_product = models.Products(name=item['title'],price=item['price'],description=item['description'],thumbnail=item['images'][0])
+        db.add(new_product)
+        db.commit()
+        db.refresh(new_product)
+    
+    return db.query(models.Products).all()
 
 
 

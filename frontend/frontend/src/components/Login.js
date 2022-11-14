@@ -43,8 +43,10 @@ const Login = () =>{
     }
 
     return(
-        <div className="is-flex is-justify-content-center m-6 " style={{width:"30rem"}} >
-            <div className="column " >
+        <div className="columns mt-3 "  >
+            <div className="column">
+            </div>
+            <div className="column is-one-third" >
             <form className="box" onSubmit={handleSubmit}>
                 <h1 className="title has-text-centered">Login</h1>
                 
@@ -83,6 +85,9 @@ const Login = () =>{
             </form>
             
         </div>
+        <div className="column">
+
+            </div>
         </div>
         
     )

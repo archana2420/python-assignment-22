@@ -40,7 +40,10 @@ const Register = () => {
   };
 
   return (
-    <div className="column">
+    <div className="columns mt-3">
+      <div className="column">
+      </div>
+      <div className="column is-half">
       <form className="box" onSubmit={handleSubmit}>
         <h1 className="title has-text-centered">Register</h1>
         <div className="field">
@@ -97,15 +100,25 @@ const Register = () => {
         </div>
         
         <br />
-        <button className="button is-primary" type="submit">
+        
+        <button className="button is-primary " type="submit">
           Register
         </button>
         <br></br>
+        <div>
         <Link to="/">
           <a className="mt-2">Already a member? Login here</a>
         </Link>
+        </div>
+        
+        
+        
                     
       </form>
+      </div>
+      <div className="column">
+
+      </div>
     </div>
   );
 };

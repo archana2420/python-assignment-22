@@ -2,7 +2,11 @@
 
 
 Backend Requirements 
+
+
 anyio==3.6.2
+
+
 bcrypt==4.0.1
 certifi==2022.9.24
 charset-normalizer==2.1.1

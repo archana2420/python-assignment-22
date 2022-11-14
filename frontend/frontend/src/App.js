@@ -1,7 +1,6 @@
-import React,{useState,useEffect, useContext} from 'react'
+import React,{useContext} from 'react'
 import Register from './components/Register';
 import Login from './components/Login';
-import Profile from './components/Profile';
 import { UserContext } from './context/UserContext';
 import { UserIdContext } from './context/UserIdContext';
 import Header from './components/Header';

@@ -79,11 +79,6 @@ async def buy_items(details:schemas.BuyItem,db:Session = Depends(services.get_db
 async def login(email:str,password:str,db:Session = Depends(services.get_db)):
     return await services.authenticate(email,password,db)
 
-@app.get("/api/")
-async def root():
-    return {"message":"Awesome"}
-
-
 
 
 @app.post('/')
@@ -103,8 +98,8 @@ async def productsList(db:Session = Depends(services.get_db)):
 
 @app.post("/api/get-product/")
 async def getProduct(item:schemas.GetProduct,db:Session = Depends(services.get_db)):
-    product = db.query(models.Products).filter(models.Products.name.ilike(item.product_name)).first()
-    product = db.query(models.Products).filter(models.Products.name==item.product_name).first()
+    product = db.query(models.Products).filter(models.Products.name.ilike(f"%{item.product_name}%")).first()
+    # product = db.query(models.Products).filter(models.Products.name==item.product_name).all()
     if not product:
         print(product)
         raise fastapi.HTTPException(status_code=404,detail="Not found!")
@@ -208,25 +203,4 @@ def create_items(db:Session = Depends(services.get_db)):
 
 
 
-
-# @app.post("/create-user/")
-# def create_user(request:schemas.UserCreate,db:Session = Depends(get_db)):
-#     new_user = models.User(name=request.name,email=request.email,password=request.password)
-#     db.add(new_user)
-#     db.commit()
-#     db.refresh(new_user)
-#     return db.query(models.User).all()
-
-# @app.post("/login-user/")
-# def login_users(request:schemas.UserBase,db:Session = Depends(get_db)):
-#     email = request.email 
-#     password = request.password
-#     res = db.query(models.User).filter(models.User.email==email)
-#     for row in res:
-#         return row.id
-
-
-# @app.get("/members")
-# def send_info():
-#     return {"members":["Member1","Member2","Member3"]}
 

@@ -22,7 +22,6 @@ const Profile = () =>{
                 console.log("Something went wrong")
             }
             else{
-                console.log(data)
                 setDetails(data)
                 setUserId(data.id)
                 

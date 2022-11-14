@@ -1,7 +1,7 @@
-# python-assignment-22
+## python-assignment-22
 
 
-Backend Requirements 
+# Backend Requirements 
 
 
 anyio==3.6.2
@@ -50,7 +50,7 @@ uvicorn==0.19.0
 
 
 
-Frontend requirements 
+3 Frontend requirements 
 
 "axios": "^1.1.3",
 
@@ -61,4 +61,13 @@ Frontend requirements
 "react-dom": "^18.2.0",
 
 "react-router-dom": "^6.4.3",
+
+# How to navigate :
+
+1) cd python-assignment-22-main 
+2) venv\Scripts\activate
+3) cd backend
+4) uvicorn main:app --reload 
+5) Open another terminal and do    npm start 
+
 

@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState,useEffect } from "react";
-import useRazorpay from "react-razorpay";
+
 
 const ProfileDetails = ({details}) =>{
 const  {id,name,email,wallet} = details
@@ -9,6 +10,9 @@ const [conditions,setConditions] = useState('')
 const [humidity,setHumidity] = useState(0)
 const [visibility,setVisibility] = useState(0)
 const [amount,setAmount] = useState(0)
+const [loading,setLoading] = useState(false)
+const [showWeather,setShowWeather] = useState(false)
+
 
 const showPayment = ()=>{
     document.getElementById('payment').style.display='block'
@@ -17,31 +21,38 @@ const showPayment = ()=>{
 
 const addMoneytoWallet = async()=>{
     // const amount = prompt("Enter amount")
-    if (amount!=null)
+    if (amount!=0)
     {
-       
+       axios.post("/api/user/add-money/",{
+        id:id,
+        wallet:amount
+       }).then((response)=>{
+        window.location.reload(true)
+       }).catch(()=>{
+        console.log("Something went wrong")
+       })
         
-        const requestOptions = {
-            method:"POST",
-            headers: { "Content-Type": "application/json" },
-            body:JSON.stringify({
-                id:id,
-                wallet:amount
-            })
+        // const requestOptions = {
+        //     method:"POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body:JSON.stringify({
+        //         id:id,
+        //         wallet:amount
+        //     })
            
-        }
-        console.log(requestOptions.body)
-        const response = await fetch("/api/user/add-money/",requestOptions)
-        const data = await response.json()
+        // }
+        // console.log(requestOptions.body)
+        // const response = await fetch("/api/user/add-money/",requestOptions)
+        // const data = await response.json()
 
-        if(!response.ok){
-            console.log("Something went wrong")
-        }
-        else{
-            console.log(data)
-            window.location.reload(true)
+        // if(!response.ok){
+        //     console.log("Something went wrong")
+        // }
+        // else{
+        //     console.log(data)
+        //     window.location.reload(true)
 
-        }
+        // }
     }
     else{
         alert("invalid")
@@ -53,31 +64,52 @@ const addMoney = (e)=>{
     addMoneytoWallet()
 }
 const getWeatherDeatails = async()=>{
-    const requestOptions ={
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-            city:city
-        })
-    }
-    const response = await fetch("/api/user/weather/",requestOptions)
-    const data = await response.json()
+    setLoading(true)
+    axios.post("/api/user/weather/",{
+        city:city
+    }).then((response)=>{
+        console.log(response.data)
+        setConditions(response.data.conditions)
+        setTemp(response.data.temp)
+        setHumidity(response.data.humidity)
+        setVisibility(response.data.visibility)
+        setLoading(false)
+        setShowWeather(true)
+        console.log(showWeather)
+    }).catch(()=>{
+        setLoading(false)
+        setShowWeather(false)
+    })
+    // const requestOptions ={
+    //     method:"POST",
+    //     headers:{"Content-Type":"application/json"},
+    //     body:JSON.stringify({
+    //         city:city
+    //     })
+    // }
+    // const response = await fetch("/api/user/weather/",requestOptions)
+    // const data = await response.json()
 
-    if(!response.ok){
-        console.log("Could not get weather details")
-    }
-    else{
-        console.log(data)
-        setConditions(data.conditions)
-        setTemp(data.temp)
-        setHumidity(data.humidity)
-        setVisibility(data.visibility)
-    }
+    // if(!response.ok){
+    //     console.log("Could not get weather details")
+    // }
+    // else{
+    //     console.log(data)
+    //     setConditions(data.conditions)
+    //     setTemp(data.temp)
+    //     setHumidity(data.humidity)
+    //     setVisibility(data.visibility)
+    //     setLoading(false)
+    //     setShowWeather(true)
+    //     console.log(showWeather)
+        
+    // }
 }
 const getWeather = (e)=>{
     e.preventDefault()
     getWeatherDeatails()
-    document.getElementById("weather").style.display="inline"
+    
+    
     
 }
 return (
@@ -118,7 +150,7 @@ return (
             </div>
             <div className="is-flex is-justify-content-center m-1">
         <button className="button is-success" >Add Money</button>
-        {/* <button onClick={handlePayment}>Click</button> */}
+        
         </div>
         </form>
         </div>
@@ -138,7 +170,7 @@ return (
                     name={city}
                     onChange={(e)=>{
                         setCity(e.currentTarget.value)
-                        document.getElementById("weather").style.display="none"
+                        setShowWeather(false)
                     }}
                     />
                     </div>
@@ -150,13 +182,17 @@ return (
                 
             </form>
         </div>
-        <div style={{display:"none"}} id="weather" className="has-text-centered">
+        <div>
+
+        </div>
+        {loading?<h1 className="title is-6 has-text-centered">Loading...</h1>:(showWeather ?<div  className="has-text-centered">
+            <h1 className="title is-3 has-text-centered">Weather</h1>
             <p className="has-text-weight-semibold">City: {city}</p>
             <p className="has-text-weight-semibold">Conditions: {conditions}</p>
             <p className="has-text-weight-semibold">Temp: {temp}</p>
             <p className="has-text-weight-semibold">Humidity: {humidity}</p>
             <p className="has-text-weight-semibold">Visibility: {visibility}</p>
-        </div>
+        </div>:<h3 className="title is-6 has-text-centered">City Not Found</h3>)}
         
     </div>
     </div>

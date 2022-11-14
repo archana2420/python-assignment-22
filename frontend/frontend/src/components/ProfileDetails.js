@@ -20,10 +20,10 @@ const showPayment = ()=>{
 }
 
 const addMoneytoWallet = async()=>{
-    // const amount = prompt("Enter amount")
+
     if (amount!=0)
     {
-       axios.post("/api/user/add-money/",{
+       await axios.post("/api/user/add-money/",{
         id:id,
         wallet:amount
        }).then((response)=>{
@@ -32,27 +32,7 @@ const addMoneytoWallet = async()=>{
         console.log("Something went wrong")
        })
         
-        // const requestOptions = {
-        //     method:"POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body:JSON.stringify({
-        //         id:id,
-        //         wallet:amount
-        //     })
-           
-        // }
-        // console.log(requestOptions.body)
-        // const response = await fetch("/api/user/add-money/",requestOptions)
-        // const data = await response.json()
-
-        // if(!response.ok){
-        //     console.log("Something went wrong")
-        // }
-        // else{
-        //     console.log(data)
-        //     window.location.reload(true)
-
-        // }
+        
     }
     else{
         alert("invalid")
@@ -80,30 +60,7 @@ const getWeatherDeatails = async()=>{
         setLoading(false)
         setShowWeather(false)
     })
-    // const requestOptions ={
-    //     method:"POST",
-    //     headers:{"Content-Type":"application/json"},
-    //     body:JSON.stringify({
-    //         city:city
-    //     })
-    // }
-    // const response = await fetch("/api/user/weather/",requestOptions)
-    // const data = await response.json()
-
-    // if(!response.ok){
-    //     console.log("Could not get weather details")
-    // }
-    // else{
-    //     console.log(data)
-    //     setConditions(data.conditions)
-    //     setTemp(data.temp)
-    //     setHumidity(data.humidity)
-    //     setVisibility(data.visibility)
-    //     setLoading(false)
-    //     setShowWeather(true)
-    //     console.log(showWeather)
-        
-    // }
+    
 }
 const getWeather = (e)=>{
     e.preventDefault()

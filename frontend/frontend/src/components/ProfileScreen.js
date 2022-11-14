@@ -5,9 +5,7 @@ import Profile from "./Profile";
 import {Link} from 'react-router-dom'
 
 const ProfileScreen = () =>{
-    const [token] = useContext(UserContext)
-   
-    const [userId,setUserId] = useContext(UserIdContext)
+    
     
     
     

@@ -24,7 +24,6 @@ export const UserIdProvider = (props)=>{
               setUserId(null);
             }
             else{
-              console.log(data)
               setUserId(data.id)
               
               

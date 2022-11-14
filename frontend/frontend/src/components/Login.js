@@ -27,7 +27,7 @@ const Login = () =>{
         }
         else{
             setToken(data.access_token)
-            console.log("Successfully Logged In")
+            
         }
         
     }

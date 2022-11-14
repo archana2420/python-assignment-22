@@ -11,15 +11,18 @@ const Dashboard = ()=>{
     const [products,setProducts] = useState([])
     const [loading,setLoading] = useState(false)
     const [currentPage,setCurrentPage] = useState(1)
-    const [productsPerPage,setProductsPerPage] = useState(10)
-    const [searchProduct,setSearchProduct] = useState('')
+    const [productsPerPage,setProductsPerPage] = useState(200)
+    const [searchProduct,setSearchProduct] = useState()
     const [showProduct,setShowProduct] = useState(true)
+    
     
     useEffect(()=>{
         const fetchProducts = async ()=>{
             setLoading(true)
             const response = await axios.get('/api/get-products/')
             setProducts(response.data)
+            // totalProductsFetched = response.data.length
+            // console.log("total",totalProductsFetched)
             setLoading(false)
         }
         fetchProducts()
@@ -33,7 +36,10 @@ const searchSpecificProduct = async()=>{
         product_name:searchProduct
     }).then((response)=>{
         setProducts([response.data])
+        console.log(response.data)
         console.log(products)
+        
+        setProductsPerPage(200)
         setShowProduct(true)
     }).catch((error)=>{
         setShowProduct(false)
@@ -100,7 +106,7 @@ return (
             </div>
         <br></br>
         <div className="is-flex is-justify-content-center is-flex-wrap-wrap ">
-        <Pagination  productsPerPage={productsPerPage} totalProducts={productList.length} paginate={paginate}/>
+        {/* <Pagination  productsPerPage={productsPerPage} totalProducts={productList.length} paginate={paginate}/> */}
                 </div>
         </div>
             :<h1 className="title is-2 has-text-centered">Product not found</h1>

@@ -1,8 +1,7 @@
 # python-assignment-22
 
-# requirements
 
-
+Backend Requirements 
 anyio==3.6.2
 bcrypt==4.0.1
 certifi==2022.9.24
@@ -25,3 +24,13 @@ starlette==0.20.4
 typing_extensions==4.4.0
 urllib3==1.26.12
 uvicorn==0.19.0
+
+
+
+Frontend requirements 
+"axios": "^1.1.3",
+"react": "^18.2.0",
+"react-axios": "^2.0.6",
+"react-dom": "^18.2.0",
+"react-router-dom": "^6.4.3",
+

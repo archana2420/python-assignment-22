@@ -22,10 +22,7 @@ export const UserProvider = (props) => {
       if (!response.ok) {
         setToken(null);
       }
-      else{
-        console.log(data)
-        
-      }
+      
       
       localStorage.setItem("LoginToken", token)
     }

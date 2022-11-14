@@ -50,7 +50,7 @@ uvicorn==0.19.0
 
 
 
-3 Frontend requirements 
+# Frontend requirements 
 
 "axios": "^1.1.3",
 
